@@ -21,7 +21,7 @@ import java.util.Optional;
  */
 @Slf4j
 @RestController
-@RequestMapping("/psychosocial-assessments")
+@RequestMapping("/api/v1/psychosocial-assessments")
 @RequiredArgsConstructor
 public class PsychosocialAssessmentController {
     

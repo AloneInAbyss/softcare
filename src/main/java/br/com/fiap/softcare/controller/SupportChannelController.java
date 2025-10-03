@@ -17,7 +17,7 @@ import java.util.Optional;
  */
 @Slf4j
 @RestController
-@RequestMapping("/support-channels")
+@RequestMapping("/api/v1/support-channels")
 @RequiredArgsConstructor
 public class SupportChannelController {
     

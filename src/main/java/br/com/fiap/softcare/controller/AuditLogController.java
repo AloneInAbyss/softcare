@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/audit-logs")
+@RequestMapping("/api/v1/audit-logs")
 @RequiredArgsConstructor
 public class AuditLogController {
     

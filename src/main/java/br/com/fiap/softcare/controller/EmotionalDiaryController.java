@@ -20,7 +20,7 @@ import java.util.Optional;
  */
 @Slf4j
 @RestController
-@RequestMapping("/emotional-diary")
+@RequestMapping("/api/v1/emotional-diary")
 @RequiredArgsConstructor
 public class EmotionalDiaryController {
     

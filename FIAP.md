@@ -575,7 +575,7 @@ Cria um novo usuário no sistema SoftCare. Este endpoint não requer autenticaç
 | HTTPBasicAuthentication |  |
 
 ---
-## default
+## Support Channels
 
 ### [GET] /api/v1/support-channels/{id}
 #### Parameters
@@ -704,7 +704,7 @@ Cria um novo usuário no sistema SoftCare. Este endpoint não requer autenticaç
 | 200 | OK | ***/***: [ [SupportChannel](#supportchannel) ]<br> |
 
 ---
-## default
+## Psychosocial Assessments
 
 ### [GET] /api/v1/psychosocial-assessments/{id}
 #### Parameters
@@ -825,7 +825,7 @@ Cria um novo usuário no sistema SoftCare. Este endpoint não requer autenticaç
 | 200 | OK | ***/***: [ [PsychosocialAssessment](#psychosocialassessment) ]<br> |
 
 ---
-## default
+## Emotional Diary
 
 ### [GET] /api/v1/emotional-diary/{id}
 #### Parameters
@@ -983,7 +983,7 @@ Cria um novo usuário no sistema SoftCare. Este endpoint não requer autenticaç
 | 200 | OK | ***/***: [ [EmotionalDiary](#emotionaldiary) ]<br> |
 
 ---
-## default
+## Audit Logs
 
 ### [GET] /api/v1/audit-logs/user/{userId}
 #### Parameters

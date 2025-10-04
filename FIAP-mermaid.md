@@ -12,23 +12,23 @@ Integrantes:
 
 ### Estrutura de Dados
 
-![diagram](./FIAP-mermaid-1.svg)
+![diagram](./diagrama-estrutura-dados.svg)
 
 ### Arquitetura Hexagonal
 
-![diagram](./FIAP-mermaid-2.svg)
+![diagram](./diagrama-arquitetura-hexagonal.svg)
 
 ### Responsabilidades por Camada
 
-![diagram](./FIAP-mermaid-3.svg)
+![diagram](./diagrama-responsabilidade-camadas.svg)
 
 ### Fluxo de Dados
 
-![diagram](./FIAP-mermaid-4.svg)
+![diagram](./diagrama-fluxo-dados.svg)
 
 ### Camadas de Segurança
 
-![diagram](./FIAP-mermaid-5.svg)
+![diagram](./diagrama-camadas-seguranca.svg)
 
 ## Endpoints
 

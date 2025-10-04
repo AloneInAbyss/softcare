@@ -1,7 +1,6 @@
 package br.com.fiap.softcare.controller;
 
 import br.com.fiap.softcare.dto.CreatePsychosocialAssessmentRequest;
-import br.com.fiap.softcare.enums.RiskLevel;
 import br.com.fiap.softcare.model.PsychosocialAssessment;
 import br.com.fiap.softcare.repository.PsychosocialAssessmentRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;

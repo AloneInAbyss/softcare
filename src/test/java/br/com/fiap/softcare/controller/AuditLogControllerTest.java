@@ -2,7 +2,6 @@ package br.com.fiap.softcare.controller;
 
 import br.com.fiap.softcare.model.AuditLog;
 import br.com.fiap.softcare.repository.AuditLogRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.springframework.web.context.WebApplicationContext;
 

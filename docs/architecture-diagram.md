@@ -4,132 +4,171 @@
 
 ```mermaid
 graph TB
-    %% External Layer
-    subgraph "🌐 External Layer"
-        CLIENT[👤 Client Applications]
-        MONGO[🗄️ MongoDB Atlas]
-        DOCKER[🐳 Docker Containers]
+    %% ===== CAMADA EXTERNA =====
+    subgraph EXTERNAL ["🌐 CAMADA EXTERNA"]
+        direction TB
+        CLIENT["👤 Client Applications<br/>🔸 Web Browser<br/>🔸 Mobile App<br/>🔸 REST Clients"]
+        SWAGGER["📚 Swagger UI<br/>🔸 API Documentation<br/>🔸 Interactive Testing<br/>🔸 OpenAPI 3.0"]
+        MONGO["🗄️ MongoDB Database<br/>🔸 Document Storage<br/>🔸 NoSQL Operations<br/>🔸 Atlas Cloud"]
+        DOCKER["🐳 Docker Environment<br/>🔸 Containerization<br/>🔸 Microservices<br/>🔸 Development Setup"]
     end
-
-    %% Interface Layer
-    subgraph "🎯 Interface Layer (Controllers)"
-        UC[👤 UserController<br/>CRUD Operations<br/>Authentication]
-        SCC[📞 SupportChannelController<br/>Channel Management<br/>Search & Filters]
-        EDC[📔 EmotionalDiaryController<br/>Diary Entries<br/>Wellness Analytics]
-        PAC[🧠 PsychosocialAssessmentController<br/>Risk Assessment<br/>Evaluation Scoring]
-        ALC[📊 AuditLogController<br/>Audit Queries<br/>Event Tracking]
-    end
-
-    %% Application Layer
-    subgraph "🔧 Application Layer (Services)"
-        US[👤 UserService<br/>User Business Logic<br/>Password Management<br/>Validation]
-        SCS[📞 SupportChannelService<br/>Channel Logic<br/>Search Algorithms<br/>Availability]
-        EDS[📔 EmotionalDiaryService<br/>Mood Analysis<br/>Wellness Calculation<br/>Statistics]
-        PAS[🧠 PsychosocialAssessmentService<br/>Risk Calculation<br/>Assessment Logic<br/>Scoring]
-        ALS[📊 AuditLogService<br/>Event Logging<br/>Security Tracking<br/>Analytics]
-    end
-
-    %% Domain Layer
-    subgraph "📦 Domain Layer (Models & DTOs)"
-        subgraph "🏷️ Models"
-            UMODEL[👤 User<br/>- id, name, email<br/>- password, role<br/>- createdAt, updatedAt]
-            SCMODEL[📞 SupportChannel<br/>- id, name, description<br/>- type, contactInfo<br/>- availability]
-            EDMODEL[📔 EmotionalDiary<br/>- id, userId, date<br/>- moodLevel, notes<br/>- stressLevel, activities]
-            PAMODEL[🧠 PsychosocialAssessment<br/>- id, userId, score<br/>- riskLevel, answers<br/>- recommendations]
-            ALMODEL[📊 AuditLog<br/>- id, userId, timestamp<br/>- eventType, severity<br/>- details, success]
-        end
-        
-        subgraph "📋 DTOs"
-            DTOS[📨 Request/Response DTOs<br/>CreateUserRequest<br/>UserResponse<br/>LoginRequest<br/>CreateEmotionalDiaryRequest<br/>CreatePsychosocialAssessmentRequest]
-        end
-        
-        subgraph "🏷️ Enums"
-            ENUMS[🔤 Domain Enums<br/>UserRole<br/>MoodLevel<br/>RiskLevel<br/>EventTypes<br/>Severity]
-        end
-    end
-
-    %% Infrastructure Layer
-    subgraph "🗄️ Infrastructure Layer (Repositories)"
-        UR[👤 UserRepository<br/>MongoDB Operations<br/>Email Queries<br/>Role Filtering]
-        SCR[📞 SupportChannelRepository<br/>Search by Type<br/>Contact Filtering<br/>Availability Queries]
-        EDR[📔 EmotionalDiaryRepository<br/>User Timeline<br/>Date Range Queries<br/>Mood Analytics]
-        PAR[🧠 PsychosocialAssessmentRepository<br/>Risk Filtering<br/>User History<br/>Score Calculations]
-        ALR[📊 AuditLogRepository<br/>Event Queries<br/>User Tracking<br/>Time-based Filters]
-    end
-
-    %% Configuration Layer
-    subgraph "⚙️ Configuration Layer"
-        SEC[🔒 SecurityConfig<br/>HTTP Basic Auth<br/>BCrypt Encoding<br/>Endpoint Protection]
-        MONGO_CONF[🗄️ MongoConfig<br/>Database Connection<br/>Repository Scanning<br/>Connection Settings]
-        APP[🚀 SoftcareApplication<br/>Spring Boot Main<br/>Auto Configuration<br/>Component Scanning]
-    end
-
-    %% External connections
-    CLIENT --> UC
-    CLIENT --> SCC
-    CLIENT --> EDC
-    CLIENT --> PAC
-    CLIENT --> ALC
-
-    %% Controller to Service connections
-    UC --> US
-    SCC --> SCS
-    EDC --> EDS
-    PAC --> PAS
-    ALC --> ALS
-
-    %% Service to Repository connections
-    US --> UR
-    SCS --> SCR
-    EDS --> EDR
-    PAS --> PAR
-    ALS --> ALR
-
-    %% Service to Model connections
-    US --> UMODEL
-    SCS --> SCMODEL
-    EDS --> EDMODEL
-    PAS --> PAMODEL
-    ALS --> ALMODEL
-
-    %% Repository to Database connections
-    UR --> MONGO
-    SCR --> MONGO
-    EDR --> MONGO
-    PAR --> MONGO
-    ALR --> MONGO
-
-    %% Configuration connections
-    SEC --> UC
-    SEC --> SCC
-    SEC --> EDC
-    SEC --> PAC
-    SEC --> ALC
     
-    MONGO_CONF --> UR
-    MONGO_CONF --> SCR
-    MONGO_CONF --> EDR
-    MONGO_CONF --> PAR
-    MONGO_CONF --> ALR
+    %% ===== CAMADA DE INTERFACE =====
+    subgraph INTERFACE ["🎯 CAMADA DE INTERFACE - REST Controllers"]
+        direction LR
+        UC["👤 UserController<br/>━━━━━━━━━━━━━━<br/>🟢 POST /users<br/>🔵 GET /users/{id}<br/>🟡 PUT /users/{id}<br/>🔴 DELETE /users/{id}<br/>🟠 POST /users/login"]
+        
+        SCC["📞 SupportChannelController<br/>━━━━━━━━━━━━━━━━━━━━━<br/>🟢 POST /support-channels<br/>🔵 GET /support-channels<br/>🔍 GET /search?type=<br/>🟡 PUT /support-channels/{id}<br/>🔴 DELETE /support-channels/{id}"]
+        
+        EDC["📔 EmotionalDiaryController<br/>━━━━━━━━━━━━━━━━━━━━━<br/>🟢 POST /emotional-diary<br/>🔵 GET /emotional-diary<br/>📊 GET /user/{id}/entries<br/>📈 GET /analytics/{userId}<br/>🟡 PUT /emotional-diary/{id}"]
+        
+        PAC["🧠 PsychosocialAssessmentController<br/>━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br/>🟢 POST /assessments<br/>🔵 GET /assessments/{id}<br/>📊 GET /user/{id}/assessments<br/>⚠️ GET /risk-analysis/{userId}<br/>🟡 PUT /assessments/{id}"]
+        
+        ALC["📊 AuditLogController<br/>━━━━━━━━━━━━━━━━━<br/>🔵 GET /audit-logs<br/>🔍 GET /search?event=<br/>👤 GET /user/{id}/logs<br/>📅 GET /date-range<br/>⚠️ GET /security-events"]
+    end
+    
+    %% ===== CAMADA DE APLICAÇÃO =====
+    subgraph APPLICATION ["🔧 CAMADA DE APLICAÇÃO - Business Services"]
+        direction LR
+        US["👤 UserService<br/>━━━━━━━━━━━━<br/>🔐 Password Encryption<br/>✅ Data Validation<br/>🔍 User Authentication<br/>👥 Role Management<br/>📧 Email Verification"]
+        
+        SCS["📞 SupportChannelService<br/>━━━━━━━━━━━━━━━━━━━<br/>🔍 Advanced Search<br/>📱 Contact Validation<br/>⏰ Availability Check<br/>🏷️ Category Management<br/>📊 Usage Analytics"]
+        
+        EDS["📔 EmotionalDiaryService<br/>━━━━━━━━━━━━━━━━━━━<br/>📈 Mood Trend Analysis<br/>🧮 Wellness Calculation<br/>📊 Statistical Reports<br/>🔔 Alert Generation<br/>📅 Timeline Management"]
+        
+        PAS["🧠 PsychosocialAssessmentService<br/>━━━━━━━━━━━━━━━━━━━━━━━━━━<br/>🧮 Risk Score Calculation<br/>📊 Assessment Analytics<br/>⚠️ Alert Threshold<br/>📈 Progress Tracking<br/>💡 Recommendations Engine"]
+        
+        ALS["📊 AuditLogService<br/>━━━━━━━━━━━━━━━<br/>🔒 Security Event Logging<br/>📝 Activity Tracking<br/>⚡ Real-time Monitoring<br/>📊 Audit Reports<br/>🔍 Forensic Analysis"]
+    end
+    
+    %% ===== CAMADA DE DOMÍNIO =====
+    subgraph DOMAIN ["📦 CAMADA DE DOMÍNIO - Core Business Logic"]
+        direction TB
+        
+        subgraph MODELS ["🏷️ DOMAIN MODELS"]
+            UMODEL["👤 User Entity<br/>━━━━━━━━━━━<br/>🆔 String id<br/>📧 String email<br/>👤 String name<br/>🔐 String password<br/>👥 UserRole role<br/>📅 LocalDateTime createdAt<br/>📝 LocalDateTime updatedAt"]
+            
+            SCMODEL["📞 SupportChannel Entity<br/>━━━━━━━━━━━━━━━━━━━<br/>🆔 String id<br/>📛 String name<br/>📝 String description<br/>🏷️ String type<br/>📱 String contactInfo<br/>⏰ String availability<br/>📅 LocalDateTime createdAt"]
+            
+            EDMODEL["📔 EmotionalDiary Entity<br/>━━━━━━━━━━━━━━━━━━━<br/>🆔 String id<br/>👤 String userId<br/>📅 LocalDate date<br/>😊 MoodLevel moodLevel<br/>📝 String notes<br/>😰 Integer stressLevel<br/>🏃 List activities<br/>📅 LocalDateTime createdAt"]
+            
+            PAMODEL["🧠 PsychosocialAssessment<br/>━━━━━━━━━━━━━━━━━━━━━━<br/>🆔 String id<br/>👤 String userId<br/>📊 Integer score<br/>⚠️ RiskLevel riskLevel<br/>📋 Map answers<br/>💡 List recommendations<br/>📅 LocalDateTime assessedAt"]
+            
+            ALMODEL["📊 AuditLog Entity<br/>━━━━━━━━━━━━━━━<br/>🆔 String id<br/>👤 String userId<br/>⏰ LocalDateTime timestamp<br/>🏷️ EventType eventType<br/>⚠️ Severity severity<br/>📝 String details<br/>✅ Boolean success"]
+        end
+        
+        subgraph DTOS ["📋 DATA TRANSFER OBJECTS"]
+            USER_DTOS["👤 User DTOs<br/>━━━━━━━━━━━<br/>� CreateUserRequest<br/>📤 UserResponse<br/>🔐 LoginRequest<br/>🔄 UpdateUserRequest<br/>🔍 UserSearchCriteria"]
+            
+            SUPPORT_DTOS["📞 Support DTOs<br/>━━━━━━━━━━━━━━<br/>📝 CreateSupportChannelRequest<br/>📤 SupportChannelResponse<br/>🔍 SearchSupportChannelRequest<br/>🔄 UpdateSupportChannelRequest"]
+            
+            DIARY_DTOS["📔 Diary DTOs<br/>━━━━━━━━━━━━━<br/>📝 CreateEmotionalDiaryRequest<br/>📤 EmotionalDiaryResponse<br/>📊 DiaryAnalyticsResponse<br/>🔄 UpdateEmotionalDiaryRequest"]
+            
+            ASSESSMENT_DTOS["🧠 Assessment DTOs<br/>━━━━━━━━━━━━━━━━━━<br/>📝 CreateAssessmentRequest<br/>📤 AssessmentResponse<br/>📊 RiskAnalysisResponse<br/>🔄 UpdateAssessmentRequest"]
+            
+            AUDIT_DTOS["📊 Audit DTOs<br/>━━━━━━━━━━━━━<br/>📤 AuditLogResponse<br/>🔍 AuditSearchRequest<br/>📊 AuditReportResponse<br/>📅 DateRangeRequest"]
+        end
+        
+        subgraph ENUMS ["🔤 DOMAIN ENUMERATIONS"]
+            ENUMS_LIST["🏷️ Business Enums<br/>━━━━━━━━━━━━━━━<br/>👥 UserRole (ADMIN, USER)<br/>😊 MoodLevel (1-10)<br/>⚠️ RiskLevel (LOW, MEDIUM, HIGH)<br/>🏷️ EventType (LOGIN, CREATE, UPDATE)<br/>⚠️ Severity (INFO, WARN, ERROR)"]
+        end
+    end
+    
+    %% ===== CAMADA DE INFRAESTRUTURA =====
+    subgraph INFRASTRUCTURE ["🗄️ CAMADA DE INFRAESTRUTURA - Data Access"]
+        direction LR
+        UR["👤 UserRepository<br/>━━━━━━━━━━━━━━━<br/>🔍 findByEmail()<br/>🔍 findByRole()<br/>📊 existsByEmail()<br/>🔄 save() & update()<br/>🗑️ deleteById()"]
+        
+        SCR["📞 SupportChannelRepository<br/>━━━━━━━━━━━━━━━━━━━━━━<br/>🔍 findByType()<br/>🔍 findByContactInfo()<br/>⏰ findByAvailability()<br/>🔍 searchByKeyword()<br/>📊 findAllActive()"]
+        
+        EDR["📔 EmotionalDiaryRepository<br/>━━━━━━━━━━━━━━━━━━━━━━<br/>👤 findByUserId()<br/>📅 findByDateRange()<br/>😊 findByMoodLevel()<br/>📊 findMoodTrends()<br/>📈 calculateAverages()"]
+        
+        PAR["🧠 PsychosocialAssessmentRepository<br/>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br/>👤 findByUserId()<br/>⚠️ findByRiskLevel()<br/>📊 findByScoreRange()<br/>📅 findByAssessmentDate()<br/>📈 calculateRiskTrends()"]
+        
+        ALR["📊 AuditLogRepository<br/>━━━━━━━━━━━━━━━━━<br/>👤 findByUserId()<br/>🏷️ findByEventType()<br/>📅 findByDateRange()<br/>⚠️ findBySeverity()<br/>🔍 findSecurityEvents()"]
+    end
+    
+    %% ===== CAMADA DE CONFIGURAÇÃO =====
+    subgraph CONFIG ["⚙️ CAMADA DE CONFIGURAÇÃO - Framework Setup"]
+        direction LR
+        SEC["🔒 SecurityConfig<br/>━━━━━━━━━━━━━━━<br/>🔐 HTTP Basic Auth<br/>🛡️ BCrypt Password Encoder<br/>🚪 Endpoint Security<br/>🔓 Public Endpoints<br/>👮 ADMIN Role Required"]
+        
+        OPENAPI["📚 OpenApiConfig<br/>━━━━━━━━━━━━━━━<br/>📄 API Documentation<br/>🔐 Security Schemes<br/>📊 Server Information<br/>📋 Contact Details<br/>🏷️ API Versioning"]
+        
+        MONGO_CONF["🗄️ MongoConfig<br/>━━━━━━━━━━━━━━<br/>🔗 Database Connection<br/>📡 Repository Scanning<br/>⚙️ Connection Settings<br/>🔄 Auto-configuration<br/>🏗️ Index Management"]
+        
+        APP["🚀 SoftcareApplication<br/>━━━━━━━━━━━━━━━━━━━<br/>▶️ Spring Boot Main Class<br/>🔄 Auto Configuration<br/>📦 Component Scanning<br/>🏗️ Bean Management<br/>🌱 Application Context"]
+    end
 
+    %% ===== CONEXÕES PRINCIPAIS =====
+    
+    %% External to Interface
+    CLIENT -.->|"HTTP/REST API"| UC
+    CLIENT -.->|"HTTP/REST API"| SCC
+    CLIENT -.->|"HTTP/REST API"| EDC
+    CLIENT -.->|"HTTP/REST API"| PAC
+    CLIENT -.->|"HTTP/REST API"| ALC
+    
+    SWAGGER -.->|"API Documentation"| INTERFACE
+    
+    %% Interface to Application
+    UC ==>|"Business Logic"| US
+    SCC ==>|"Business Logic"| SCS
+    EDC ==>|"Business Logic"| EDS
+    PAC ==>|"Business Logic"| PAS
+    ALC ==>|"Business Logic"| ALS
+    
+    %% Application to Domain
+    US -.->|"Domain Models"| UMODEL
+    SCS -.->|"Domain Models"| SCMODEL
+    EDS -.->|"Domain Models"| EDMODEL
+    PAS -.->|"Domain Models"| PAMODEL
+    ALS -.->|"Domain Models"| ALMODEL
+    
+    US -.->|"DTOs"| USER_DTOS
+    SCS -.->|"DTOs"| SUPPORT_DTOS
+    EDS -.->|"DTOs"| DIARY_DTOS
+    PAS -.->|"DTOs"| ASSESSMENT_DTOS
+    ALS -.->|"DTOs"| AUDIT_DTOS
+    
+    %% Application to Infrastructure
+    US ==>|"Data Access"| UR
+    SCS ==>|"Data Access"| SCR
+    EDS ==>|"Data Access"| EDR
+    PAS ==>|"Data Access"| PAR
+    ALS ==>|"Data Access"| ALR
+    
+    %% Infrastructure to External
+    UR ==>|"MongoDB Operations"| MONGO
+    SCR ==>|"MongoDB Operations"| MONGO
+    EDR ==>|"MongoDB Operations"| MONGO
+    PAR ==>|"MongoDB Operations"| MONGO
+    ALR ==>|"MongoDB Operations"| MONGO
+    
+    %% Configuration Connections
+    SEC -.->|"Security"| INTERFACE
+    OPENAPI -.->|"Documentation"| INTERFACE
+    MONGO_CONF -.->|"Database Config"| INFRASTRUCTURE
+    APP -.->|"Bootstrap"| CONFIG
+    
     %% Infrastructure
-    DOCKER --> MONGO
-    DOCKER --> APP
+    DOCKER -.->|"Container"| MONGO
+    DOCKER -.->|"Container"| APP
 
-    %% Styling
-    classDef controller fill:#e1f5fe
-    classDef service fill:#f3e5f5
-    classDef model fill:#e8f5e8
-    classDef repository fill:#fff3e0
-    classDef config fill:#fce4ec
-    classDef external fill:#f5f5f5
-
-    class UC,SCC,EDC,PAC,ALC controller
-    class US,SCS,EDS,PAS,ALS service
-    class UMODEL,SCMODEL,EDMODEL,PAMODEL,ALMODEL,DTOS,ENUMS model
-    class UR,SCR,EDR,PAR,ALR repository
-    class SEC,MONGO_CONF,APP config
-    class CLIENT,MONGO,DOCKER external
+    %% ===== ESTILOS VISUAIS =====
+    classDef external fill:#f8f9fa,stroke:#6c757d,stroke-width:3px,color:#212529
+    classDef interface fill:#e3f2fd,stroke:#1976d2,stroke-width:3px,color:#0d47a1
+    classDef application fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px,color:#4a148c
+    classDef domain fill:#e8f5e8,stroke:#388e3c,stroke-width:3px,color:#1b5e20
+    classDef infrastructure fill:#fff3e0,stroke:#f57c00,stroke-width:3px,color:#e65100
+    classDef config fill:#fce4ec,stroke:#c2185b,stroke-width:3px,color:#880e4f
+    
+    class CLIENT,SWAGGER,MONGO,DOCKER external
+    class UC,SCC,EDC,PAC,ALC interface
+    class US,SCS,EDS,PAS,ALS application
+    class UMODEL,SCMODEL,EDMODEL,PAMODEL,ALMODEL,USER_DTOS,SUPPORT_DTOS,DIARY_DTOS,ASSESSMENT_DTOS,AUDIT_DTOS,ENUMS_LIST domain
+    class UR,SCR,EDR,PAR,ALR infrastructure
+    class SEC,OPENAPI,MONGO_CONF,APP config
 ```
 
 ## 🎯 Responsabilidades por Camada

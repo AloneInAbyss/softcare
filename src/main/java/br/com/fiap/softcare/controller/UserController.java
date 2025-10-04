@@ -5,6 +5,14 @@ import br.com.fiap.softcare.dto.LoginRequest;
 import br.com.fiap.softcare.dto.UserResponse;
 import br.com.fiap.softcare.model.User;
 import br.com.fiap.softcare.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +31,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
+@Tag(name = "👤 Usuários", description = "API para gerenciamento de usuários do sistema SoftCare")
+@SecurityRequirement(name = "HTTP Basic Authentication")
 public class UserController {
     
     private final UserService userService;
@@ -31,7 +41,21 @@ public class UserController {
      * Create a new user
      */
     @PostMapping
-    public ResponseEntity<UserResponse> createUser(@Valid @RequestBody CreateUserRequest request) {
+    @Operation(
+        summary = "Criar novo usuário",
+        description = "Cria um novo usuário no sistema SoftCare. Este endpoint não requer autenticação."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Usuário criado com sucesso",
+                    content = @Content(schema = @Schema(implementation = UserResponse.class))),
+        @ApiResponse(responseCode = "400", description = "Dados inválidos fornecidos",
+                    content = @Content),
+        @ApiResponse(responseCode = "409", description = "Email já está em uso",
+                    content = @Content)
+    })
+    public ResponseEntity<UserResponse> createUser(
+            @Parameter(description = "Dados do usuário a ser criado", required = true)
+            @Valid @RequestBody CreateUserRequest request) {
         log.info("Creating user with email: {}", request.getEmail());
         
         User user = User.builder()

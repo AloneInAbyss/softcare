@@ -55,6 +55,11 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/users/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll() // Permite registro de novos usuários
                 
+                // Swagger/OpenAPI endpoints
+                .requestMatchers("/swagger-ui/**", "/swagger-ui.html", 
+                               "/v3/api-docs/**", "/v3/api-docs", 
+                               "/swagger-resources/**", "/webjars/**").permitAll()
+                
                 // Todos os outros endpoints da API requerem autenticação
                 .requestMatchers("/api/v1/**").authenticated()
                 
